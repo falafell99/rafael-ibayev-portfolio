@@ -153,7 +153,7 @@ const Contact = () => {
           >
             {[
               { icon: MapPin, title: "Location", value: "Budapest, Hungary" },
-              { icon: Phone, title: "Phone", value: "(+36) 705668417" },
+              { icon: Phone, title: "Phone", value: "Available upon request" },
             ].map((item, i) => (
               <motion.div
                 key={item.title}
