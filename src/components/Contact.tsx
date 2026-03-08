@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { MapPin, Phone, Send } from "lucide-react";
+import { MapPin, Phone, Send, Sparkles } from "lucide-react";
 import { useState } from "react";
 
 const Contact = () => {
@@ -7,56 +7,78 @@ const Contact = () => {
   const [consent, setConsent] = useState(false);
 
   return (
-    <section id="contact" className="py-24 px-6">
-      <div className="container max-w-6xl mx-auto">
+    <section id="contact" className="py-24 px-6 relative">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-[150px] opacity-10 bg-primary pointer-events-none" />
+
+      <div className="container max-w-6xl mx-auto relative">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7 }}
           className="mb-16"
         >
-          <span className="font-mono-label text-primary mb-4 block">CONTACT</span>
+          <motion.span
+            className="font-mono-label text-primary mb-4 block"
+            initial={{ opacity: 0, letterSpacing: "0.5em" }}
+            whileInView={{ opacity: 1, letterSpacing: "0.2em" }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            CONTACT
+          </motion.span>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
             Let's Build Something Amazing
           </h2>
+          <motion.div
+            className="h-1 bg-primary rounded-full mt-4"
+            initial={{ width: 0 }}
+            whileInView={{ width: 80 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          />
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Form */}
-          <div className="glass-card p-8">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="glass-card p-8 relative overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 if (!consent) return;
               }}
-              className="space-y-6"
+              className="space-y-6 relative"
             >
-              <div>
-                <label className="font-mono-label text-muted-foreground mb-2 block">Name</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                  placeholder="Your name"
-                />
-              </div>
-              <div>
-                <label className="font-mono-label text-muted-foreground mb-2 block">Email</label>
-                <input
-                  type="email"
-                  required
-                  className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                  placeholder="your@email.com"
-                />
-              </div>
-              <div>
+              {["Name", "Email"].map((field, i) => (
+                <motion.div
+                  key={field}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                >
+                  <label className="font-mono-label text-muted-foreground mb-2 block">{field}</label>
+                  <input
+                    type={field === "Email" ? "email" : "text"}
+                    required
+                    className="w-full bg-muted border border-border rounded-lg px-4 py-3 text-foreground text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
+                    placeholder={field === "Email" ? "your@email.com" : "Your name"}
+                  />
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+              >
                 <label className="font-mono-label text-muted-foreground mb-3 block">Area of Interest</label>
                 <div className="flex flex-wrap gap-3">
                   {[
@@ -64,11 +86,13 @@ const Contact = () => {
                     { value: "webdev", label: "Web Dev" },
                     { value: "robotics", label: "Robotics" },
                   ].map((opt) => (
-                    <label
+                    <motion.label
                       key={opt.value}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                       className={`cursor-pointer px-4 py-2 rounded-full text-sm font-medium transition-all ${
                         interest === opt.value
-                          ? "bg-primary text-primary-foreground"
+                          ? "bg-primary text-primary-foreground shadow-[0_0_20px_hsl(24_100%_50%/0.3)]"
                           : "glass-card text-muted-foreground hover:text-foreground"
                       }`}
                     >
@@ -81,11 +105,16 @@ const Contact = () => {
                         className="sr-only"
                       />
                       {opt.label}
-                    </label>
+                    </motion.label>
                   ))}
                 </div>
-              </div>
-              <div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+              >
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     type="checkbox"
@@ -98,50 +127,75 @@ const Contact = () => {
                     I consent to being contacted for collaboration purposes.
                   </span>
                 </label>
-              </div>
-              <button
+              </motion.div>
+              <motion.button
                 type="submit"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity w-full justify-center"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity w-full justify-center relative overflow-hidden group"
               >
-                Send Message
-                <Send size={16} />
-              </button>
+                <span className="relative z-10 flex items-center gap-2">
+                  Send Message
+                  <Send size={16} />
+                </span>
+                <Sparkles size={14} className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </motion.button>
             </form>
-          </div>
+          </motion.div>
 
           {/* Info */}
-          <div className="flex flex-col justify-center gap-8">
-            <div className="glass-card p-8">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="p-3 rounded-xl bg-muted text-primary">
-                  <MapPin size={24} />
-                </div>
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="flex flex-col justify-center gap-6"
+          >
+            {[
+              { icon: MapPin, title: "Location", value: "Budapest, Hungary" },
+              { icon: Phone, title: "Phone", value: "(+36) 705668417" },
+            ].map((item, i) => (
+              <motion.div
+                key={item.title}
+                whileHover={{ x: 5 }}
+                className="glass-card p-6 flex items-center gap-4"
+              >
+                <motion.div
+                  className="p-3 rounded-xl bg-muted text-primary flex-shrink-0"
+                  whileHover={{ rotate: 15 }}
+                >
+                  <item.icon size={24} />
+                </motion.div>
                 <div>
-                  <h4 className="font-semibold text-foreground">Location</h4>
-                  <p className="text-sm text-muted-foreground">Budapest, Hungary</p>
+                  <h4 className="font-semibold text-foreground">{item.title}</h4>
+                  <p className="text-sm text-muted-foreground">{item.value}</p>
                 </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="p-3 rounded-xl bg-muted text-primary">
-                  <Phone size={24} />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground">Phone</h4>
-                  <p className="text-sm text-muted-foreground">(+36) 705668417</p>
-                </div>
-              </div>
-            </div>
+              </motion.div>
+            ))}
 
-            <div className="glass-card p-8">
-              <h4 className="font-mono-label text-primary mb-3">SKILLS</h4>
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              className="glass-card p-6"
+            >
+              <h4 className="font-mono-label text-primary mb-4">SKILLS</h4>
               <div className="flex flex-wrap gap-2">
-                {["Python", "C#", "Java", "C", "JavaScript", "Computer Vision", "Machine Learning", "Robotics"].map((skill) => (
-                  <span key={skill} className="badge-glass">{skill}</span>
+                {["Python", "C#", "Java", "C", "JavaScript", "Computer Vision", "Machine Learning", "Robotics"].map((skill, i) => (
+                  <motion.span
+                    key={skill}
+                    className="badge-glass"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.05 }}
+                    whileHover={{ scale: 1.1, borderColor: "hsl(24 100% 50% / 0.5)" }}
+                  >
+                    {skill}
+                  </motion.span>
                 ))}
               </div>
-            </div>
-          </div>
-        </motion.div>
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
