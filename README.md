@@ -1,73 +1,55 @@
-# Welcome to your Lovable project
+# UrbanFlow AI: Multi-Agent Reinforcement Learning (MARL) Logistics Simulator 🚄🤖
 
-## Project info
+[![Deployed on Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)](https://YOUR-VERCEL-LINK-HERE.vercel.app/)
+[![Tech Stack](https://img.shields.io/badge/Stack-React%20%7C%20TypeScript%20%7C%20Framer%20Motion-blue)](#)
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 📌 Overview
+**UrbanFlow AI** is a high-fidelity simulation environment designed to optimize autonomous logistics in dense urban environments. The system utilizes **Multi-Agent Reinforcement Learning (MARL)** to coordinate dozens of delivery units, ensuring collision-free navigation and minimal latency.
 
-## How can I edit this code?
+This project bridges the gap between complex AI research and intuitive data visualization, providing a mission-control interface for decentralized fleet management.
 
-There are several ways of editing your application.
+## 🧠 Core AI Concepts
+The simulation is built upon the **Centralized Training, Decentralized Execution (CTDE)** framework, utilizing a **Proximal Policy Optimization (PPO)** approach for agent decision-making.
 
-**Use Lovable**
+### The Reward Function
+To ensure optimal behavior, each agent operates based on a multi-objective reward function $R$:
+$$R = \sum (D_{success} \times 10) - (C_{collision} \times 50) - (L_{latency} \times 0.1)$$
+Where:
+* $D_{success}$: Successful deliveries.
+* $C_{collision}$: Penalty for agent-to-agent or agent-to-environment conflict.
+* $L_{latency}$: Cost of time and computational energy.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🛠 Features
+* **Real-time Pathfinding:** Dynamic trajectory recalculation using A* search integrated with neural network policy outputs.
+* **Scenario Intelligence:** Stress-test the system with "Peak Congestion" and "Emergency Rerouting" (blocking intersections in real-time).
+* **Deep Telemetry:** Individual asset tracking (UUID, Confidence Score, Battery Life, and Task Queue).
+* **Enterprise UI:** Minimalist, high-density dashboard built with Shadcn UI and Radix primitives.
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🏗 Technical Architecture
+1.  **Simulation Engine:** A stochastic discrete-event simulator running on the frontend (React State).
+2.  **Perception Layer:** Agents process local observations (State Space) from a 20x20 grid.
+3.  **Analytics Pipeline:** Real-time data streaming into Recharts for throughput and network health visualization.
 
-**Use your preferred IDE**
+## 🚀 Getting Started
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/YOUR_USERNAME/urban-flow-ai.git](https://github.com/YOUR_USERNAME/urban-flow-ai.git)
+Install dependencies:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Bash
+npm install
+Run the development server:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Bash
 npm run dev
-```
+👨‍💻 Author
+Rafael Ibayev
 
-**Edit a file directly in GitHub**
+Computer Science Student at ELTE University, Budapest.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+International STEM Olympiad Gold Medalist.
 
-**Use GitHub Codespaces**
+Interested in Robotics, AI Safety, and High-Performance Systems.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
