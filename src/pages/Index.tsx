@@ -6,7 +6,7 @@ import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
 import TechSpecs from "@/components/TechSpecs";
 import Timeline from "@/components/Timeline";
-import PhotoGallery from "@/components/PhotoGallery";
+import CurrentlyLearning from "@/components/CurrentlyLearning";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
@@ -32,7 +32,7 @@ const Index = () => {
           <TechSpecs />
         </section>
         <Timeline />
-        <PhotoGallery />
+        <CurrentlyLearning />
         <Contact />
       </main>
       <Footer />
