@@ -2,12 +2,12 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 const photos = [
-  { src: "/images/mathgold.jpg", alt: "Mathematics Gold Medal", caption: "Math Olympiad Gold" },
-  { src: "/images/robot.jpg", alt: "Robotics Project", caption: "Robotic Arm Build" },
-  { src: "/images/techgold.jpg", alt: "Technology Competition", caption: "Tech Competition" },
-  { src: "/images/hci.jpg", alt: "HCI Project", caption: "Gesture Control HCI" },
-  { src: "/images/codingbronze.jpg", alt: "Coding Competition", caption: "Coding Olympiad" },
-  { src: "/images/orator.png", alt: "Public Speaking", caption: "Public Speaking" },
+  { src: "/images/gallery-coding.jpg", alt: "Late night coding session", caption: "Late Night Coding" },
+  { src: "/images/gallery-robotics.jpg", alt: "Robotics workshop", caption: "Robotics Workshop" },
+  { src: "/images/gallery-math.jpg", alt: "Mathematics study", caption: "Math Deep Dive" },
+  { src: "/images/gallery-university.jpg", alt: "University campus", caption: "ELTE Budapest" },
+  { src: "/images/gallery-ai.jpg", alt: "Neural network visualization", caption: "AI & Neural Networks" },
+  { src: "/images/gallery-awards.jpg", alt: "Award ceremony", caption: "Competition Awards" },
 ];
 
 const PhotoGallery = () => {
