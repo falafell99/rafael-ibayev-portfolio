@@ -102,10 +102,11 @@ const Hero = () => {
                     variants={letterVariants}
                     initial="hidden"
                     animate="visible"
-                    className="text-gradient-muted inline-block dark:text-gradient-muted"
-                    style={{ WebkitTextFillColor: "transparent" }}
+                    className="inline-block text-muted-foreground"
+                    style={{ color: "hsl(var(--muted-foreground))" }}
                     whileHover={{
                       y: -10,
+                      color: "hsl(24, 100%, 50%)",
                       transition: { duration: 0.2 },
                     }}
                   >
