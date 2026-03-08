@@ -20,6 +20,7 @@ const Navbar = () => {
       className="fixed top-6 left-1/2 -translate-x-1/2 z-50"
     >
       <div className="glass-card flex items-center gap-1 px-2 py-2 animate-pulse-glow">
+        <ThemeToggle />
         {navItems.map((item, i) => (
           <motion.a
             key={item.href}
