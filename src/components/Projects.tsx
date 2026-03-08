@@ -9,6 +9,7 @@ const projects = [
     description: "Bilingual (EN/HU) AI speech prep lab with real-time analysis. Built at MIT Hackathon using Azure AI & Gemini.",
     image: "/images/orator.png",
     techStack: ["Azure AI", "Gemini", "React", "Python"],
+    github: "https://github.com/falafell99/ORATOR99",
   },
   {
     title: "Fraud Detection",
@@ -16,6 +17,7 @@ const projects = [
     description: "Real-time anomaly detection in streaming financial data using Isolation Forest algorithm.",
     image: "/images/fraud.png",
     techStack: ["Python", "Scikit-learn", "Kafka", "Docker"],
+    github: "https://github.com/Data-Science-Club-ELTE/offline-online-anomaly-detection",
   },
   {
     title: "Robotic Arm",
@@ -23,6 +25,7 @@ const projects = [
     description: "Bio-signal prosthetic arm with EMG sensor integration for natural gesture control.",
     image: "/images/robot.jpg",
     techStack: ["C", "Arduino", "EMG Sensors", "3D Printing"],
+    github: "https://github.com/falafell99/robotic-arm",
   },
   {
     title: "HCI System",
@@ -30,6 +33,7 @@ const projects = [
     description: "Real-time gesture detection and human-computer interaction using MediaPipe and OpenCV.",
     image: "/images/hci.jpg",
     techStack: ["Python", "MediaPipe", "OpenCV", "TensorFlow"],
+    github: "https://github.com/falafell99/real-time-hci-gestures",
   },
   {
     title: "Baku Monorail",
@@ -37,6 +41,7 @@ const projects = [
     description: "Urban transport engineering prototype designed for Baku city infrastructure.",
     image: "/images/monorail.png",
     techStack: ["CAD", "Engineering", "Prototyping"],
+    github: "https://github.com/falafell99/baku-monorail-system",
   },
 ];
 
