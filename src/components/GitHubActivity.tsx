@@ -1,10 +1,36 @@
 import { motion } from "framer-motion";
 import { useMemo } from "react";
+import { ExternalLink } from "lucide-react";
 
-const WEEKS = 52;
 const DAYS = 7;
 const DAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
 const MONTH_LABELS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+// Real contribution data from github.com/falafell99
+const CONTRIBUTIONS: Record<string, number> = {
+  "2025-11-04": 1,
+  "2025-11-30": 4,
+  "2025-12-04": 1,
+  "2025-12-21": 1,
+  "2025-12-28": 1,
+  "2026-01-04": 1,
+  "2026-01-11": 1,
+  "2026-01-13": 1,
+  "2026-02-25": 2,
+  "2026-02-27": 4,
+  "2026-02-28": 23,
+  "2026-03-02": 11,
+  "2026-03-05": 9,
+  "2026-03-08": 6,
+};
+
+const getLevel = (count: number): number => {
+  if (count === 0) return 0;
+  if (count <= 2) return 1;
+  if (count <= 5) return 2;
+  if (count <= 10) return 3;
+  return 4;
+};
 
 const getLevelClass = (level: number) => {
   switch (level) {
@@ -17,39 +43,48 @@ const getLevelClass = (level: number) => {
   }
 };
 
+const formatDate = (d: Date): string => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+};
+
 const GitHubActivity = () => {
-  const grid = useMemo(() => {
-    const data: number[][] = [];
-    for (let w = 0; w < WEEKS; w++) {
-      const week: number[] = [];
+  const { grid, monthLabels, totalContributions } = useMemo(() => {
+    const end = new Date(2026, 2, 8); // March 8, 2026
+    const start = new Date(end);
+    start.setDate(start.getDate() - 364); // ~52 weeks back
+
+    // Align start to Sunday
+    const dayOfWeek = start.getDay();
+    start.setDate(start.getDate() - dayOfWeek);
+
+    const weeks: { level: number; count: number; date: string }[][] = [];
+    const months: { label: string; col: number }[] = [];
+    let total = 0;
+    let lastMonth = -1;
+    const current = new Date(start);
+
+    while (current <= end || weeks.length < 52) {
+      const week: { level: number; count: number; date: string }[] = [];
       for (let d = 0; d < DAYS; d++) {
-        // Simulate realistic-ish activity
-        const rand = Math.random();
-        if (rand < 0.3) week.push(0);
-        else if (rand < 0.55) week.push(1);
-        else if (rand < 0.75) week.push(2);
-        else if (rand < 0.9) week.push(3);
-        else week.push(4);
+        const dateStr = formatDate(current);
+        const count = CONTRIBUTIONS[dateStr] || 0;
+        total += count;
+        week.push({ level: getLevel(count), count, date: dateStr });
+
+        if (d === 0 && current.getMonth() !== lastMonth) {
+          lastMonth = current.getMonth();
+          months.push({ label: MONTH_LABELS[lastMonth], col: weeks.length });
+        }
+        current.setDate(current.getDate() + 1);
       }
-      data.push(week);
+      weeks.push(week);
+      if (weeks.length >= 53) break;
     }
-    return data;
-  }, []);
 
-  const totalContributions = useMemo(() => {
-    return grid.flat().reduce((sum, level) => sum + level * 3, 0);
-  }, [grid]);
-
-  // Calculate month positions
-  const monthPositions = useMemo(() => {
-    const positions: { label: string; col: number }[] = [];
-    const now = new Date();
-    for (let i = 0; i < 12; i++) {
-      const month = new Date(now.getFullYear(), now.getMonth() - 11 + i, 1);
-      const weekIndex = Math.floor((i / 12) * WEEKS);
-      positions.push({ label: MONTH_LABELS[month.getMonth()], col: weekIndex });
-    }
-    return positions;
+    return { grid: weeks, monthLabels: months, totalContributions: total };
   }, []);
 
   return (
@@ -90,26 +125,36 @@ const GitHubActivity = () => {
           transition={{ duration: 0.6 }}
           className="glass-card p-6 overflow-x-auto"
         >
-          <p className="text-muted-foreground text-sm mb-4">
-            <span className="text-foreground font-semibold">{totalContributions}</span> contributions in the last year
-          </p>
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-muted-foreground text-sm">
+              <span className="text-foreground font-semibold">{totalContributions}</span> contributions in the last year
+            </p>
+            <a
+              href="https://github.com/falafell99"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors font-mono"
+            >
+              @falafell99 <ExternalLink size={12} />
+            </a>
+          </div>
 
           {/* Month labels */}
-          <div className="flex gap-0 mb-1 ml-8">
-            {monthPositions.map((m, i) => (
+          <div className="flex gap-[3px] mb-1 ml-8">
+            {monthLabels.map((m, i) => (
               <span
                 key={i}
-                className="text-[10px] text-muted-foreground font-mono"
-                style={{ width: `${100 / 12}%` }}
+                className="text-[10px] text-muted-foreground font-mono absolute"
+                style={{ left: `calc(32px + ${m.col} * 16px)` }}
               >
                 {m.label}
               </span>
             ))}
           </div>
+          <div className="h-4" />
 
           {/* Grid */}
           <div className="flex gap-1">
-            {/* Day labels */}
             <div className="flex flex-col gap-[3px] mr-1">
               {DAY_LABELS.map((label, i) => (
                 <span key={i} className="text-[10px] text-muted-foreground font-mono h-[13px] leading-[13px]">
@@ -118,14 +163,14 @@ const GitHubActivity = () => {
               ))}
             </div>
 
-            {/* Cells */}
             <div className="flex gap-[3px]">
               {grid.map((week, wi) => (
                 <div key={wi} className="flex flex-col gap-[3px]">
-                  {week.map((level, di) => (
+                  {week.map((cell, di) => (
                     <motion.div
                       key={`${wi}-${di}`}
-                      className={`w-[13px] h-[13px] rounded-[2px] ${getLevelClass(level)}`}
+                      className={`w-[13px] h-[13px] rounded-[2px] ${getLevelClass(cell.level)} cursor-default`}
+                      title={`${cell.count} contributions on ${cell.date}`}
                       initial={{ opacity: 0, scale: 0 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}

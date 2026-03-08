@@ -5,6 +5,7 @@ const languages = [
   { name: "Russian", level: "Native", percent: 100, flag: "🇷🇺" },
   { name: "Azerbaijani", level: "Native", percent: 100, flag: "🇦🇿" },
   { name: "Turkish", level: "Intermediate", percent: 60, flag: "🇹🇷" },
+  { name: "Hungarian", level: "Beginner", percent: 15, flag: "🇭🇺" },
 ];
 
 const Languages = () => {
