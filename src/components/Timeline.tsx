@@ -12,9 +12,9 @@ const events = [
   },
   {
     year: "2022",
-    title: "First STEM Olympiad",
-    description: "Competed in international STEM Olympiads, winning first gold medal in Mathematics.",
-    icon: Award,
+    title: "Deep Dive into Web & Algorithms",
+    description: "Explored web development, learned JavaScript and React, and participated in competitive programming contests.",
+    icon: Code,
     color: "accent",
   },
   {
@@ -27,14 +27,14 @@ const events = [
   {
     year: "2024",
     title: "Olympiads, Math & New Technologies",
-    description: "Continued competing in STEM olympiads, deepened knowledge in advanced mathematics, and explored new frameworks and tools for AI and web development.",
+    description: "Competed in STEM olympiads, deepened knowledge in advanced mathematics, and explored new frameworks and tools for AI and web development.",
     icon: Award,
     color: "accent",
   },
   {
     year: "2025",
-    title: "ELTE University — Computer Science",
-    description: "Enrolled in Computer Science program at Eötvös Loránd University, Budapest.",
+    title: "ELTE University & STEM Gold",
+    description: "Enrolled in Computer Science at Eötvös Loránd University, Budapest. Won international STEM Olympiad gold medal in Mathematics.",
     icon: GraduationCap,
     color: "primary",
   },
