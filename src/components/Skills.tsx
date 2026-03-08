@@ -15,7 +15,7 @@ const categories = [
     skills: [
       { name: "React", level: 80 },
       { name: "TensorFlow / PyTorch", level: 75 },
-      { name: "OpenCV", level: 70 },
+      { name: "OpenCV", level: 85 },
       { name: "Node.js", level: 65 },
     ],
   },
