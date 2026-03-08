@@ -24,7 +24,7 @@ const categories = [
     skills: [
       { name: "Git & GitHub", level: 85 },
       { name: "Linux", level: 75 },
-      { name: "Docker", level: 60 },
+      { name: "Docker", level: 40 },
       { name: "Arduino / ROS", level: 70 },
     ],
   },
