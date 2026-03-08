@@ -118,11 +118,20 @@ const Hero = () => {
             </div>
           </div>
 
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.7, delay: 0.8 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 leading-relaxed"
+          >
+            <Typewriter />
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.7, delay: 1.0 }}
+            className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             Building AI, robotics, and real-time systems. International STEM Olympiad gold medalist.
             Passionate about solving complex engineering challenges through software-hardware integration.
