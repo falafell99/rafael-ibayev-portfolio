@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { Github } from "lucide-react";
 import { useRef } from "react";
 
 const projects = [
