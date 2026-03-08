@@ -5,7 +5,7 @@ const categories = [
     title: "Languages",
     skills: [
       { name: "Python", level: 90 },
-      { name: "C / C++", level: 75 },
+      { name: "C / C++", level: 55 },
       { name: "JavaScript / TypeScript", level: 85 },
       { name: "SQL", level: 70 },
     ],
