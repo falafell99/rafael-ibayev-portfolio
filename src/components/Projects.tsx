@@ -109,8 +109,9 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-primary transition-colors flex-shrink-0 mt-1"
+            className="relative z-10 text-muted-foreground hover:text-primary transition-colors flex-shrink-0 mt-1 cursor-pointer"
             onClick={(e) => e.stopPropagation()}
+            style={{ transformStyle: "flat" }}
           >
             <motion.div whileHover={{ scale: 1.2 }}>
               <Github size={20} />
