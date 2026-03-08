@@ -237,8 +237,8 @@
 
   /* Particle dot grid */
   .dot-grid {
-    background-image: radial-gradient(circle, hsl(0 0% 100% / 0.05) 1px, transparent 1px);
-    background-size: 24px 24px;
+    background-image: radial-gradient(circle, hsl(0 0% 100% / 0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
   }
 }
 

@@ -1,6 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
-import { useRef, useMemo, Suspense } from "react";
+import { useRef, useMemo, Suspense, useState, useEffect } from "react";
 import * as THREE from "three";
 
 const techLabels = [
@@ -22,7 +22,7 @@ function TechNode({ position, label }: { position: [number, number, number]; lab
   return (
     <group position={position}>
       <mesh ref={meshRef}>
-        <sphereGeometry args={[0.08, 8, 8]} />
+        <sphereGeometry args={[0.08, 6, 6]} />
         <meshBasicMaterial color="#ff6600" />
       </mesh>
       <Text
@@ -63,36 +63,32 @@ function RotatingGroup() {
     }
   });
 
-  const lineGeometries = useMemo(() => {
-    const lines: { points: Float32Array }[] = [];
+  const lineData = useMemo(() => {
+    const lines: THREE.Line[] = [];
+    const mat = new THREE.LineBasicMaterial({ color: "#ff6600", transparent: true, opacity: 0.15 });
     for (let i = 0; i < positions.length; i++) {
       for (let j = i + 1; j < positions.length; j++) {
         const dist = new THREE.Vector3(...positions[i]).distanceTo(new THREE.Vector3(...positions[j]));
         if (dist < 2.2) {
-          const pts = new Float32Array([...positions[i], ...positions[j]]);
-          lines.push({ points: pts });
+          const geo = new THREE.BufferGeometry();
+          geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array([...positions[i], ...positions[j]]), 3));
+          lines.push(new THREE.Line(geo, mat));
         }
       }
     }
     return lines;
   }, [positions]);
 
-  const lineMaterial = useMemo(() => new THREE.LineBasicMaterial({ color: "#ff6600", transparent: true, opacity: 0.15 }), []);
-
   return (
     <group ref={groupRef}>
       {positions.map((pos, i) => (
         <TechNode key={techLabels[i]} position={pos} label={techLabels[i]} />
       ))}
-      {lineGeometries.map((line, i) => {
-        const geo = new THREE.BufferGeometry();
-        geo.setAttribute('position', new THREE.BufferAttribute(line.points, 3));
-        return (
-          <primitive key={`line-${i}`} object={new THREE.Line(geo, lineMaterial)} />
-        );
-      })}
+      {lineData.map((line, i) => (
+        <primitive key={`line-${i}`} object={line} />
+      ))}
       <mesh>
-        <sphereGeometry args={[0.15, 16, 16]} />
+        <sphereGeometry args={[0.15, 12, 12]} />
         <meshBasicMaterial color="#ff6600" transparent opacity={0.6} />
       </mesh>
     </group>
@@ -100,19 +96,35 @@ function RotatingGroup() {
 }
 
 const TechSphere = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <div className="w-full h-[300px] md:h-[400px] relative">
-      <Canvas
-        camera={{ position: [0, 0, 4.5], fov: 45 }}
-        dpr={[1, 1.5]}
-        frameloop="always"
-        gl={{ antialias: false, powerPreference: "low-power" }}
-      >
-        <ambientLight intensity={0.5} />
-        <Suspense fallback={null}>
-          <RotatingGroup />
-        </Suspense>
-      </Canvas>
+    <div ref={containerRef} className="w-full h-[300px] md:h-[400px] relative">
+      {isVisible && (
+        <Canvas
+          camera={{ position: [0, 0, 4.5], fov: 45 }}
+          dpr={[1, 1.5]}
+          frameloop="always"
+          gl={{ antialias: false, powerPreference: "low-power" }}
+        >
+          <ambientLight intensity={0.5} />
+          <Suspense fallback={null}>
+            <RotatingGroup />
+          </Suspense>
+        </Canvas>
+      )}
     </div>
   );
 };
