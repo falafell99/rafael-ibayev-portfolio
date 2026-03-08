@@ -12,9 +12,9 @@ const events = [
   },
   {
     year: "2022",
-    title: "First STEM Olympiad",
-    description: "Competed in international STEM Olympiads, winning first gold medal in Mathematics.",
-    icon: Award,
+    title: "Deep Dive into Web & Algorithms",
+    description: "Explored web development, learned JavaScript and React, and participated in competitive programming contests.",
+    icon: Code,
     color: "accent",
   },
   {
