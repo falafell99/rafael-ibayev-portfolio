@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Github, Linkedin, ArrowDown } from "lucide-react";
+import { Github, Linkedin, FileText, ArrowDown } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -81,6 +81,15 @@ const Hero = () => {
               className="p-3 rounded-full glass-card text-muted-foreground hover:text-primary transition-colors"
             >
               <Linkedin size={20} />
+            </a>
+            <a
+              href="/RafaelFCV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-full glass-card text-muted-foreground hover:text-primary transition-colors"
+              title="CV / Resume"
+            >
+              <FileText size={20} />
             </a>
           </motion.div>
         </div>
