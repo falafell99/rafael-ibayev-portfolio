@@ -88,9 +88,7 @@ function RotatingGroup() {
         <TechNode key={techLabels[i]} position={pos} label={techLabels[i]} />
       ))}
       {linePoints.map((geo, i) => (
-        <line key={i} geometry={geo}>
-          <lineBasicMaterial color="#ff660033" transparent opacity={0.2} />
-        </line>
+        <primitive key={i} object={new THREE.Line(geo, new THREE.LineBasicMaterial({ color: "#ff6600", transparent: true, opacity: 0.15 }))} />
       ))}
       {/* Center glow sphere */}
       <mesh>
