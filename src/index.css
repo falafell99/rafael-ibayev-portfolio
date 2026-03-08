@@ -258,9 +258,15 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling & hide cursor on desktop */
 html {
   scroll-behavior: smooth;
+}
+
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
 }
 
 /* Custom scrollbar */

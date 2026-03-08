@@ -189,6 +189,17 @@ const Hero = () => {
               </motion.a>
             ))}
           </motion.div>
+
+          {/* 3D Tech Sphere */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 1.5 }}
+          >
+            <Suspense fallback={null}>
+              <TechSphere />
+            </Suspense>
+          </motion.div>
         </div>
       </motion.div>
 
