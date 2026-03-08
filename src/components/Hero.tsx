@@ -80,7 +80,8 @@ const Hero = () => {
                     variants={letterVariants}
                     initial="hidden"
                     animate="visible"
-                    className="text-foreground inline-block"
+                    className="inline-block text-foreground"
+                    style={{ color: "hsl(var(--foreground))" }}
                     whileHover={{ 
                       y: -10, 
                       color: "hsl(24, 100%, 50%)",
