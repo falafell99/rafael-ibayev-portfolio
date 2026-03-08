@@ -1,6 +1,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Github, Linkedin, FileText, ArrowDown } from "lucide-react";
-import { useRef } from "react";
+import { useRef, lazy, Suspense } from "react";
+
+const TechSphere = lazy(() => import("./TechSphere"));
 
 const Hero = () => {
   const ref = useRef(null);
