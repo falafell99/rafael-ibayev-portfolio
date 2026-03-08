@@ -20,16 +20,23 @@ const events = [
   {
     year: "2023",
     title: "Robotics & AI Projects",
-    description: "Built robotic arm with computer vision, fraud detection system, and HCI gesture control.",
+    description: "Built robotic arm with computer vision and HCI gesture control system.",
     icon: Briefcase,
     color: "primary",
   },
   {
     year: "2024",
+    title: "Olympiads, Math & New Technologies",
+    description: "Continued competing in STEM olympiads, deepened knowledge in advanced mathematics, and explored new frameworks and tools for AI and web development.",
+    icon: Award,
+    color: "accent",
+  },
+  {
+    year: "2025",
     title: "ELTE University — Computer Science",
     description: "Enrolled in Computer Science program at Eötvös Loránd University, Budapest.",
     icon: GraduationCap,
-    color: "accent",
+    color: "primary",
   },
 ];
 
