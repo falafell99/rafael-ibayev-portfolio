@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
-import { Home, FolderOpen, Award, Wrench, Mail, Clock } from "lucide-react";
+import { Home, FolderOpen, Award, Wrench, Mail, Clock, BarChart3 } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
   { icon: Home, href: "#top", label: "Home" },
   { icon: FolderOpen, href: "#projects", label: "Projects" },
   { icon: Award, href: "#achievements", label: "Achievements" },
+  { icon: BarChart3, href: "#skills", label: "Skills" },
   { icon: Clock, href: "#timeline", label: "Timeline" },
   { icon: Wrench, href: "#specs", label: "Specs" },
   { icon: Mail, href: "#contact", label: "Contact" },
