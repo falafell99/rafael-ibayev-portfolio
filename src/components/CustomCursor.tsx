@@ -1,20 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-
-const TRAIL_LENGTH = 8;
 
 const CustomCursor = () => {
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
   const springX = useSpring(cursorX, { damping: 25, stiffness: 300 });
   const springY = useSpring(cursorY, { damping: 25, stiffness: 300 });
-  const [trail, setTrail] = useState<{ x: number; y: number; id: number }[]>([]);
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const idRef = useRef(0);
 
   useEffect(() => {
-    // Only show custom cursor on desktop
     const isTouchDevice = "ontouchstart" in window;
     if (isTouchDevice) return;
 
@@ -22,12 +17,6 @@ const CustomCursor = () => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
       setIsVisible(true);
-
-      idRef.current++;
-      setTrail((prev) => [
-        ...prev.slice(-(TRAIL_LENGTH - 1)),
-        { x: e.clientX, y: e.clientY, id: idRef.current },
-      ]);
     };
 
     const handleOver = (e: MouseEvent) => {
@@ -39,8 +28,8 @@ const CustomCursor = () => {
     const handleLeave = () => setIsVisible(false);
     const handleEnter = () => setIsVisible(true);
 
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mouseover", handleOver);
+    window.addEventListener("mousemove", move, { passive: true });
+    window.addEventListener("mouseover", handleOver, { passive: true });
     document.addEventListener("mouseleave", handleLeave);
     document.addEventListener("mouseenter", handleEnter);
 
@@ -52,30 +41,8 @@ const CustomCursor = () => {
     };
   }, [cursorX, cursorY]);
 
-  if (!isVisible && trail.length === 0) return null;
-
   return (
-    <div className="pointer-events-none fixed inset-0 z-[9999] hidden md:block" style={{ cursor: "none" }}>
-      {/* Trail particles */}
-      {trail.map((point, i) => (
-        <motion.div
-          key={point.id}
-          initial={{ opacity: 0.6, scale: 1 }}
-          animate={{ opacity: 0, scale: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          onAnimationComplete={() =>
-            setTrail((prev) => prev.filter((p) => p.id !== point.id))
-          }
-          className="absolute rounded-full bg-primary"
-          style={{
-            left: point.x - 3,
-            top: point.y - 3,
-            width: 6,
-            height: 6,
-          }}
-        />
-      ))}
-
+    <div className="pointer-events-none fixed inset-0 z-[9999] hidden md:block">
       {/* Main cursor ring */}
       <motion.div
         className="absolute rounded-full border-2 border-primary"
