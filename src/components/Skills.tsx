@@ -5,7 +5,7 @@ const categories = [
     title: "Languages",
     skills: [
       { name: "Python", level: 90 },
-      { name: "C / C++", level: 75 },
+      { name: "C / C++", level: 55 },
       { name: "JavaScript / TypeScript", level: 85 },
       { name: "SQL", level: 70 },
     ],
@@ -15,7 +15,7 @@ const categories = [
     skills: [
       { name: "React", level: 80 },
       { name: "TensorFlow / PyTorch", level: 75 },
-      { name: "OpenCV", level: 70 },
+      { name: "OpenCV", level: 85 },
       { name: "Node.js", level: 65 },
     ],
   },
@@ -24,7 +24,7 @@ const categories = [
     skills: [
       { name: "Git & GitHub", level: 85 },
       { name: "Linux", level: 75 },
-      { name: "Docker", level: 60 },
+      { name: "Docker", level: 40 },
       { name: "Arduino / ROS", level: 70 },
     ],
   },
