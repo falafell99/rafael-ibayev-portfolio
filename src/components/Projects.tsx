@@ -105,12 +105,17 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
           <h3 className="text-xl font-bold text-foreground group-hover:text-gradient-primary transition-colors">
             {project.title}
           </h3>
-          <motion.div
-            className="text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 mt-1"
-            whileHover={{ x: 3, y: -3 }}
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-primary transition-colors flex-shrink-0 mt-1"
+            onClick={(e) => e.stopPropagation()}
           >
-            <ArrowUpRight size={20} />
-          </motion.div>
+            <motion.div whileHover={{ scale: 1.2 }}>
+              <Github size={20} />
+            </motion.div>
+          </a>
         </div>
         <p className="text-sm text-muted-foreground leading-relaxed mb-4">
           {project.description}
