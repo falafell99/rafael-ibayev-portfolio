@@ -21,7 +21,7 @@ const Hero = () => {
       transition: {
         duration: 0.8,
         delay: i * 0.05,
-        ease: [0.215, 0.61, 0.355, 1],
+        ease: [0.215, 0.61, 0.355, 1] as [number, number, number, number],
       },
     }),
   };
