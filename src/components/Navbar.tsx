@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
-import { Home, FolderOpen, Award, Wrench, Mail } from "lucide-react";
+import { Home, FolderOpen, Award, Wrench, Mail, Clock } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
   { icon: Home, href: "#top", label: "Home" },
   { icon: FolderOpen, href: "#projects", label: "Projects" },
   { icon: Award, href: "#achievements", label: "Achievements" },
+  { icon: Clock, href: "#timeline", label: "Timeline" },
   { icon: Wrench, href: "#specs", label: "Specs" },
   { icon: Mail, href: "#contact", label: "Contact" },
 ];
@@ -18,6 +20,7 @@ const Navbar = () => {
       className="fixed top-6 left-1/2 -translate-x-1/2 z-50"
     >
       <div className="glass-card flex items-center gap-1 px-2 py-2 animate-pulse-glow">
+        <ThemeToggle />
         {navItems.map((item, i) => (
           <motion.a
             key={item.href}
