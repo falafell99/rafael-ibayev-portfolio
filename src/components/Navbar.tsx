@@ -20,7 +20,7 @@ const Navbar = () => {
       transition={{ duration: 0.8, delay: 1.5, ease: [0.215, 0.61, 0.355, 1] }}
       className="fixed left-4 top-1/2 -translate-y-1/2 z-50 hidden md:block"
     >
-      <div className="glass-card flex flex-col items-center gap-1 px-2 py-3 animate-pulse-glow">
+      <div className="glass-card flex flex-col items-center gap-1 px-2 py-3">
         <ThemeToggle />
         {navItems.map((item, i) => (
           <motion.a

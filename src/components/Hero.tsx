@@ -34,36 +34,17 @@ const Hero = () => {
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated ambient glows */}
+      {/* Single simplified ambient glow */}
       <motion.div
         style={{ y }}
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full opacity-20 blur-[120px] bg-primary pointer-events-none"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full opacity-15 blur-[100px] bg-primary pointer-events-none"
       />
-      <motion.div
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.1, 0.2, 0.1],
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/3 left-1/4 w-[400px] h-[400px] rounded-full blur-[100px] bg-accent pointer-events-none"
-      />
-      <motion.div
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.08, 0.15, 0.08],
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] rounded-full blur-[80px] bg-primary pointer-events-none"
-      />
-
-      {/* Dot grid background */}
-      <div className="absolute inset-0 dot-grid opacity-30" />
 
       <motion.div style={{ opacity, scale }} className="container relative z-10 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="mb-6"
           >
@@ -119,8 +100,8 @@ const Hero = () => {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.8 }}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 leading-relaxed"
           >
@@ -128,8 +109,8 @@ const Hero = () => {
           </motion.div>
 
           <motion.p
-            initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.0 }}
             className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
@@ -184,7 +165,7 @@ const Hero = () => {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full glass-card text-muted-foreground hover:text-primary transition-colors relative group"
+                className="p-3 rounded-full glass-card text-muted-foreground hover:text-primary transition-colors"
                 whileHover={{ scale: 1.15, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
                 initial={{ opacity: 0, scale: 0 }}
@@ -193,12 +174,6 @@ const Hero = () => {
                 title={social.label}
               >
                 <social.icon size={20} />
-                <motion.div
-                  className="absolute inset-0 rounded-full"
-                  whileHover={{
-                    boxShadow: "0 0 20px hsl(24 100% 50% / 0.4)",
-                  }}
-                />
               </motion.a>
             ))}
           </motion.div>
