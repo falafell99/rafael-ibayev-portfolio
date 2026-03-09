@@ -191,7 +191,12 @@ const Projects = () => {
               whileHover={{ y: -4 }}
               className="glass-card p-6 group hover:border-[#10b981]/40 hover:shadow-[0_0_20px_rgba(16,185,129,0.1)] transition-all duration-300 block"
             >
-              <span className="font-mono-label text-[#10b981] text-[10px] mb-2 block">{project.tag}</span>
+              <div className="flex items-start justify-between mb-2">
+                <span className="font-mono-label text-[#10b981] text-[10px]">{project.tag}</span>
+                {project.github !== "#" && (
+                  <Github size={15} className="text-muted-foreground group-hover:text-[#10b981] transition-colors shrink-0" />
+                )}
+              </div>
               <h4 className="text-lg font-semibold text-foreground group-hover:text-[#10b981] transition-colors mb-2">{project.title}</h4>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">{project.description}</p>
               <div className="flex flex-wrap gap-1.5">
