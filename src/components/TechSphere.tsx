@@ -23,7 +23,7 @@ function TechNode({ position, label }: { position: [number, number, number]; lab
     <group position={position}>
       <mesh ref={meshRef}>
         <sphereGeometry args={[0.08, 6, 6]} />
-        <meshBasicMaterial color="#ff6600" />
+        <meshBasicMaterial color="#10b981" />
       </mesh>
       <Text
         position={[0, 0.18, 0]}
@@ -65,7 +65,7 @@ function RotatingGroup() {
 
   const lineData = useMemo(() => {
     const lines: THREE.Line[] = [];
-    const mat = new THREE.LineBasicMaterial({ color: "#ff6600", transparent: true, opacity: 0.15 });
+    const mat = new THREE.LineBasicMaterial({ color: "#10b981", transparent: true, opacity: 0.15 });
     for (let i = 0; i < positions.length; i++) {
       for (let j = i + 1; j < positions.length; j++) {
         const dist = new THREE.Vector3(...positions[i]).distanceTo(new THREE.Vector3(...positions[j]));
@@ -89,7 +89,7 @@ function RotatingGroup() {
       ))}
       <mesh>
         <sphereGeometry args={[0.15, 12, 12]} />
-        <meshBasicMaterial color="#ff6600" transparent opacity={0.6} />
+        <meshBasicMaterial color="#10b981" transparent opacity={0.6} />
       </mesh>
     </group>
   );
