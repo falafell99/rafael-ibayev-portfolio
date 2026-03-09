@@ -23,7 +23,7 @@ function TechNode({ position, label }: { position: [number, number, number]; lab
     <group position={position}>
       <mesh ref={meshRef}>
         <sphereGeometry args={[0.08, 6, 6]} />
-        <meshBasicMaterial color="#ff6600" />
+        <meshBasicMaterial color="#10b981" />
       </mesh>
       <Text
         position={[0, 0.18, 0]}
