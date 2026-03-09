@@ -89,7 +89,7 @@ function RotatingGroup() {
       ))}
       <mesh>
         <sphereGeometry args={[0.15, 12, 12]} />
-        <meshBasicMaterial color="#ff6600" transparent opacity={0.6} />
+        <meshBasicMaterial color="#10b981" transparent opacity={0.6} />
       </mesh>
     </group>
   );
