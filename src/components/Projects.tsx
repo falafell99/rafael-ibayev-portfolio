@@ -113,7 +113,7 @@ const FeaturedCard = ({ project, i }: { project: typeof featuredProjects[0]; i: 
             </motion.span>
             <h3 className="text-2xl md:text-3xl font-bold text-foreground group-hover:text-[#10b981] transition-all duration-300">{project.title}</h3>
           </div>
-          {!project.isInternal && (
+          {project.github && (
             <a href={project.github} target="_blank" rel="noopener noreferrer" className="relative z-10 p-3 rounded-full glass-card text-muted-foreground hover:text-[#10b981] hover:border-[#10b981]/40 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all duration-300" onClick={(e) => e.stopPropagation()}>
               <motion.div whileHover={{ scale: 1.2, rotate: 5 }} whileTap={{ scale: 0.9 }}><Github size={22} /></motion.div>
             </a>
