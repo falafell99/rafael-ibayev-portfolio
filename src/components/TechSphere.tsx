@@ -9,19 +9,9 @@ const techLabels = [
 ];
 
 function TechNode({ position, label }: { position: [number, number, number]; label: string }) {
-  const meshRef = useRef<THREE.Mesh>(null);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.scale.setScalar(
-        1 + Math.sin(state.clock.elapsedTime * 2 + position[0]) * 0.1
-      );
-    }
-  });
-
   return (
     <group position={position}>
-      <mesh ref={meshRef}>
+      <mesh>
         <sphereGeometry args={[0.08, 6, 6]} />
         <meshBasicMaterial color="#10b981" />
       </mesh>
@@ -115,7 +105,7 @@ const TechSphere = () => {
       {isVisible && (
         <Canvas
           camera={{ position: [0, 0, 4.5], fov: 45 }}
-          dpr={[1, 1.5]}
+          dpr={1}
           frameloop="always"
           gl={{ antialias: false, powerPreference: "low-power" }}
         >
