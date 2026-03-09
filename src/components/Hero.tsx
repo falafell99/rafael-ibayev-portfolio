@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Github, Linkedin, FileText, ArrowDown } from "lucide-react";
+import { Github, Linkedin, ArrowDown } from "lucide-react";
 import { useRef, lazy, Suspense } from "react";
 import Typewriter from "./Typewriter";
 
@@ -186,7 +186,6 @@ const Hero = () => {
             {[
               { href: "https://github.com/rafael-ibayev", icon: Github, label: "GitHub" },
               { href: "https://linkedin.com/in/rafael-ibayev", icon: Linkedin, label: "LinkedIn" },
-              { href: "/RafaelFCV.pdf", icon: FileText, label: "CV" },
             ].map((social, i) => (
               <motion.a
                 key={social.label}
