@@ -9,6 +9,7 @@ const featuredProjects = [
     description: "A fault-tolerant distributed Key-Value store built on the Raft Consensus Algorithm. Includes a global observability map and real-time quorum health monitoring.",
     techStack: ["Distributed Systems", "Raft", "Algorithms", "Consensus"],
     github: "https://github.com/falafell99/nexusDB.git",
+    live: "https://raft-overseer.vercel.app",
     math: "Q = ⌊n/2⌋ + 1",
     gradient: "from-indigo-500/20 to-purple-500/20",
   },
@@ -18,6 +19,7 @@ const featuredProjects = [
     description: "A high-fidelity Multi-Agent Reinforcement Learning simulator for autonomous logistics. Features 'Neural Planning' visualization and strict spatial locking for zero-collision delivery.",
     techStack: ["Python", "PyTorch", "MARL", "A* Pathfinding"],
     github: "https://github.com/falafell99/urbanflow-command.git",
+    live: "https://urbanflow-command.vercel.app",
     math: "R = Σ(D_success × 10) − (C_collision × 50)",
     gradient: "from-emerald-500/20 to-cyan-500/20",
   },
@@ -26,8 +28,8 @@ const featuredProjects = [
     tag: "Student OS",
     description: "The unified educational ecosystem for the university community. Centralizes academic heritage with a RAG-based AI tutor and peer-to-peer study circles.",
     techStack: ["RAG", "AI Architecture", "SaaS", "Education Tech"],
-    github: "#",
-    isInternal: true,
+    github: "https://github.com/falafell99/uniflow-campus-hub.git",
+    live: "https://uniflow-campus-hub.vercel.app",
     gradient: "from-amber-500/20 to-orange-500/20",
   },
   {
@@ -36,6 +38,7 @@ const featuredProjects = [
     description: "A web application for public speaking practice. Provides real-time feedback, speech analytics, and structured training modules to build confidence and eloquence.",
     techStack: ["Web App", "Speech Analysis", "Real-time Feedback", "NLP"],
     github: "https://github.com/falafell99/ORATOR99.git",
+    live: "https://orator-99.vercel.app",
     gradient: "from-rose-500/20 to-pink-500/20",
   },
   {
@@ -110,7 +113,7 @@ const FeaturedCard = ({ project, i }: { project: typeof featuredProjects[0]; i: 
             </motion.span>
             <h3 className="text-2xl md:text-3xl font-bold text-foreground group-hover:text-[#10b981] transition-all duration-300">{project.title}</h3>
           </div>
-          {!project.isInternal && (
+          {project.github && (
             <a href={project.github} target="_blank" rel="noopener noreferrer" className="relative z-10 p-3 rounded-full glass-card text-muted-foreground hover:text-[#10b981] hover:border-[#10b981]/40 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all duration-300" onClick={(e) => e.stopPropagation()}>
               <motion.div whileHover={{ scale: 1.2, rotate: 5 }} whileTap={{ scale: 0.9 }}><Github size={22} /></motion.div>
             </a>
@@ -129,8 +132,11 @@ const FeaturedCard = ({ project, i }: { project: typeof featuredProjects[0]; i: 
             </motion.span>
           ))}
         </div>
-        {project.isInternal ? (
-          <span className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-muted-foreground italic">Internal Preview</span>
+        {project.live ? (
+          <motion.a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-[#10b981] hover:text-[#34d399] transition-colors group/link" whileHover={{ x: 5 }}>
+            <span>View Project</span>
+            <ExternalLink size={14} className="group-hover/link:translate-x-1 transition-transform" />
+          </motion.a>
         ) : (
           <motion.a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-[#10b981] hover:text-[#34d399] transition-colors group/link" whileHover={{ x: 5 }}>
             <span>View on GitHub</span>
