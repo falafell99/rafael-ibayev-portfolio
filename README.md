@@ -33,7 +33,7 @@ I specialize in building high-performance distributed systems, multi-agent reinf
 ---
 
 ## 💻 Technical Stack
-* **Languages:** Python, C, Java, JavaScript (TypeScript).
+* **Languages:** Python, C, C#, Java, JavaScript (TypeScript).
 * **AI/ML:** PyTorch, Reinforcement Learning (PPO), Computer Vision (YOLO), RAG.
 * **Infrastructure:** Distributed Systems (Raft), Linux, Git, FastAPI.
 * **Frontend:** React, Tailwind CSS, Framer Motion (Obsidian UI Design).
