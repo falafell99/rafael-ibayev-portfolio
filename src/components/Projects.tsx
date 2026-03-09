@@ -132,8 +132,11 @@ const FeaturedCard = ({ project, i }: { project: typeof featuredProjects[0]; i: 
             </motion.span>
           ))}
         </div>
-        {project.isInternal ? (
-          <span className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-muted-foreground italic">Internal Preview</span>
+        {project.live ? (
+          <motion.a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-[#10b981] hover:text-[#34d399] transition-colors group/link" whileHover={{ x: 5 }}>
+            <span>View Project</span>
+            <ExternalLink size={14} className="group-hover/link:translate-x-1 transition-transform" />
+          </motion.a>
         ) : (
           <motion.a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-[#10b981] hover:text-[#34d399] transition-colors group/link" whileHover={{ x: 5 }}>
             <span>View on GitHub</span>
