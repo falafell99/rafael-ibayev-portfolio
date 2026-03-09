@@ -6,9 +6,9 @@ import Typewriter from "./Typewriter";
 const TechSphere = lazy(() => import("./TechSphere"));
 
 const coreExpertise = [
-  { label: "Algorithm Optimization", icon: "⚡" },
   { label: "Distributed Systems", icon: "🔗" },
-  { label: "AI Architectures", icon: "🧠" },
+  { label: "Autonomous AI", icon: "🧠" },
+  { label: "Real-time Processing", icon: "⚡" },
 ];
 
 const Hero = () => {
@@ -40,10 +40,10 @@ const Hero = () => {
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Emerald/Indigo ambient glows */}
+      {/* Cyber Emerald ambient glows */}
       <motion.div
         style={{ y }}
-        className="absolute top-1/4 left-1/3 w-[400px] h-[400px] rounded-full opacity-20 blur-[120px] bg-primary pointer-events-none"
+        className="absolute top-1/4 left-1/3 w-[400px] h-[400px] rounded-full opacity-20 blur-[120px] bg-[#10b981] pointer-events-none"
       />
       <motion.div
         style={{ y: useTransform(scrollYProgress, [0, 1], [0, 150]) }}
@@ -52,14 +52,16 @@ const Hero = () => {
 
       <motion.div style={{ opacity, scale }} className="container relative z-10 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Updated Professional Identity */}
+          {/* Professional Identity */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="mb-6"
           >
-            <span className="font-mono-label text-primary">CS @ ELTE BUDAPEST • INTERNATIONAL STEM OLYMPIAD GOLD MEDALIST</span>
+            <span className="font-mono-label text-[#10b981]">
+              CS @ ELTE BUDAPEST • INTERNATIONAL STEM OLYMPIAD GOLD MEDALIST
+            </span>
           </motion.div>
 
           {/* Animated letter-by-letter name */}
@@ -77,7 +79,7 @@ const Hero = () => {
                     style={{ color: "hsl(var(--foreground))" }}
                     whileHover={{ 
                       y: -10, 
-                      color: "hsl(160, 84%, 39%)",
+                      color: "#10b981",
                       transition: { duration: 0.2 } 
                     }}
                   >
@@ -99,7 +101,7 @@ const Hero = () => {
                     style={{ color: "hsl(var(--muted-foreground))" }}
                     whileHover={{
                       y: -10,
-                      color: "hsl(239, 84%, 67%)",
+                      color: "#34d399",
                       transition: { duration: 0.2 },
                     }}
                   >
@@ -125,7 +127,7 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 1.0 }}
             className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed"
           >
-            Building AI, robotics, and real-time systems. Passionate about solving complex engineering challenges through software-hardware integration.
+            Architecting Distributed Systems & Autonomous AI Environments
           </motion.p>
 
           {/* Core Expertise Section */}
@@ -142,7 +144,7 @@ const Hero = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.2 + i * 0.1, type: "spring", stiffness: 200 }}
                 whileHover={{ scale: 1.05, y: -2 }}
-                className="px-4 py-2 rounded-full glass-card border border-border/50 hover:border-primary/40 transition-all duration-300"
+                className="px-4 py-2 rounded-full glass-card border border-border/50 hover:border-[#10b981]/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] transition-all duration-300"
               >
                 <span className="mr-2">{item.icon}</span>
                 <span className="text-sm font-medium text-foreground">{item.label}</span>
@@ -160,22 +162,16 @@ const Hero = () => {
               href="#projects"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity relative overflow-hidden group"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#10b981] text-white font-semibold text-sm hover:bg-[#059669] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all duration-300 relative overflow-hidden group"
             >
               <span className="relative z-10">View My Work</span>
               <ArrowDown size={16} className="relative z-10" />
-              <motion.div
-                className="absolute inset-0 bg-accent"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: "0%" }}
-                transition={{ duration: 0.3 }}
-              />
             </motion.a>
             <motion.a
               href="#contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full glass-card text-foreground font-semibold text-sm hover:border-primary/30 transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full glass-card text-foreground font-semibold text-sm hover:border-[#10b981]/40 hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] transition-all duration-300"
             >
               Get in Touch
             </motion.a>
@@ -197,7 +193,7 @@ const Hero = () => {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full glass-card text-muted-foreground hover:text-primary transition-colors"
+                className="p-3 rounded-full glass-card text-muted-foreground hover:text-[#10b981] hover:border-[#10b981]/40 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all duration-300"
                 whileHover={{ scale: 1.15, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
                 initial={{ opacity: 0, scale: 0 }}
@@ -236,7 +232,7 @@ const Hero = () => {
           className="flex flex-col items-center gap-2"
         >
           <span className="font-mono-label text-muted-foreground text-[10px]">SCROLL</span>
-          <ArrowDown size={16} className="text-muted-foreground" />
+          <ArrowDown size={16} className="text-[#10b981]" />
         </motion.div>
       </motion.div>
     </section>

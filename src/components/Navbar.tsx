@@ -26,7 +26,7 @@ const Navbar = () => {
           <motion.a
             key={item.href}
             href={item.href}
-            className="p-3 rounded-xl text-muted-foreground hover:text-primary hover:bg-muted/50 transition-all relative group"
+            className="p-3 rounded-xl text-muted-foreground hover:text-[#10b981] hover:bg-[#10b981]/10 hover:shadow-[0_0_15px_rgba(16,185,129,0.2)] transition-all duration-300 relative group"
             title={item.label}
             whileHover={{ scale: 1.15, x: 4 }}
             whileTap={{ scale: 0.9 }}
@@ -35,7 +35,7 @@ const Navbar = () => {
             transition={{ delay: 1.6 + i * 0.08 }}
           >
             <item.icon size={18} />
-            <span className="absolute left-12 top-1/2 -translate-y-1/2 font-mono-label text-[10px] text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap bg-card/90 backdrop-blur-sm px-2 py-1 rounded-md border border-border/50">
+            <span className="absolute left-12 top-1/2 -translate-y-1/2 font-mono-label text-[10px] text-[#10b981] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap bg-card/90 backdrop-blur-sm px-2 py-1 rounded-md border border-[#10b981]/30 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
               {item.label}
             </span>
           </motion.a>
