@@ -65,7 +65,7 @@ function RotatingGroup() {
 
   const lineData = useMemo(() => {
     const lines: THREE.Line[] = [];
-    const mat = new THREE.LineBasicMaterial({ color: "#ff6600", transparent: true, opacity: 0.15 });
+    const mat = new THREE.LineBasicMaterial({ color: "#10b981", transparent: true, opacity: 0.15 });
     for (let i = 0; i < positions.length; i++) {
       for (let j = i + 1; j < positions.length; j++) {
         const dist = new THREE.Vector3(...positions[i]).distanceTo(new THREE.Vector3(...positions[j]));
