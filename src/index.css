@@ -117,7 +117,7 @@
 
 @layer components {
   .glass-card {
-    @apply bg-card border border-border/50 rounded-2xl;
+    @apply bg-card rounded-2xl;
     background: hsl(var(--glass-bg));
     border: 1px solid hsl(var(--glass-border));
     backdrop-filter: blur(20px);
@@ -128,18 +128,18 @@
   }
 
   .glass-card-hover:hover {
-    border-color: hsl(24 100% 50% / 0.3);
-    box-shadow: 0 0 40px hsl(var(--glow-primary)), inset 0 1px 0 hsl(0 0% 100% / 0.05);
+    border-color: hsl(160 84% 39% / 0.4);
+    box-shadow: 0 0 40px hsl(var(--glow-primary)), 0 0 80px hsl(var(--glow-accent)), inset 0 1px 0 hsl(0 0% 100% / 0.05);
   }
 
   .text-gradient-primary {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(24 100% 50%), hsl(24 100% 65%));
+    background-image: linear-gradient(135deg, hsl(160 84% 39%), hsl(160 84% 55%));
   }
 
   .text-gradient-accent {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(80 80% 55%), hsl(80 80% 70%));
+    background-image: linear-gradient(135deg, hsl(239 84% 67%), hsl(239 84% 80%));
   }
 
   .text-gradient-muted {
@@ -159,6 +159,11 @@
   .text-gradient-bronze {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(135deg, hsl(30 60% 55%), hsl(20 50% 40%));
+  }
+
+  .text-gradient-emerald-indigo {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(160 84% 39%), hsl(239 84% 67%));
   }
 
   .font-mono-label {
