@@ -5,6 +5,12 @@ import Typewriter from "./Typewriter";
 
 const TechSphere = lazy(() => import("./TechSphere"));
 
+const coreExpertise = [
+  { label: "Algorithm Optimization", icon: "⚡" },
+  { label: "Distributed Systems", icon: "🔗" },
+  { label: "AI Architectures", icon: "🧠" },
+];
+
 const Hero = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -34,21 +40,26 @@ const Hero = () => {
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Single simplified ambient glow */}
+      {/* Emerald/Indigo ambient glows */}
       <motion.div
         style={{ y }}
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full opacity-15 blur-[100px] bg-primary pointer-events-none"
+        className="absolute top-1/4 left-1/3 w-[400px] h-[400px] rounded-full opacity-20 blur-[120px] bg-primary pointer-events-none"
+      />
+      <motion.div
+        style={{ y: useTransform(scrollYProgress, [0, 1], [0, 150]) }}
+        className="absolute bottom-1/4 right-1/3 w-[350px] h-[350px] rounded-full opacity-15 blur-[100px] bg-accent pointer-events-none"
       />
 
       <motion.div style={{ opacity, scale }} className="container relative z-10 px-6">
         <div className="max-w-4xl mx-auto text-center">
+          {/* Updated Professional Identity */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="mb-6"
           >
-            <span className="font-mono-label text-primary">COMPUTER SCIENCE @ ELTE</span>
+            <span className="font-mono-label text-primary">CS @ ELTE BUDAPEST • INTERNATIONAL STEM OLYMPIAD GOLD MEDALIST</span>
           </motion.div>
 
           {/* Animated letter-by-letter name */}
@@ -66,7 +77,7 @@ const Hero = () => {
                     style={{ color: "hsl(var(--foreground))" }}
                     whileHover={{ 
                       y: -10, 
-                      color: "hsl(24, 100%, 50%)",
+                      color: "hsl(160, 84%, 39%)",
                       transition: { duration: 0.2 } 
                     }}
                   >
@@ -88,7 +99,7 @@ const Hero = () => {
                     style={{ color: "hsl(var(--muted-foreground))" }}
                     whileHover={{
                       y: -10,
-                      color: "hsl(24, 100%, 50%)",
+                      color: "hsl(239, 84%, 67%)",
                       transition: { duration: 0.2 },
                     }}
                   >
@@ -112,16 +123,37 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.0 }}
-            className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed"
           >
-            Building AI, robotics, and real-time systems. International STEM Olympiad gold medalist.
-            Passionate about solving complex engineering challenges through software-hardware integration.
+            Building AI, robotics, and real-time systems. Passionate about solving complex engineering challenges through software-hardware integration.
           </motion.p>
+
+          {/* Core Expertise Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 1.1 }}
+            className="flex flex-wrap items-center justify-center gap-3 mb-10"
+          >
+            {coreExpertise.map((item, i) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.2 + i * 0.1, type: "spring", stiffness: 200 }}
+                whileHover={{ scale: 1.05, y: -2 }}
+                className="px-4 py-2 rounded-full glass-card border border-border/50 hover:border-primary/40 transition-all duration-300"
+              >
+                <span className="mr-2">{item.icon}</span>
+                <span className="text-sm font-medium text-foreground">{item.label}</span>
+              </motion.div>
+            ))}
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.0 }}
+            transition={{ duration: 0.6, delay: 1.3 }}
             className="flex items-center justify-center gap-4 mb-12"
           >
             <motion.a
@@ -152,11 +184,11 @@ const Hero = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.2 }}
+            transition={{ duration: 0.6, delay: 1.5 }}
             className="flex items-center justify-center gap-5"
           >
             {[
-              { href: "https://github.com/falafell99", icon: Github, label: "GitHub" },
+              { href: "https://github.com/rafael-ibayev", icon: Github, label: "GitHub" },
               { href: "https://linkedin.com/in/rafael-ibayev", icon: Linkedin, label: "LinkedIn" },
               { href: "/RafaelFCV.pdf", icon: FileText, label: "CV" },
             ].map((social, i) => (
@@ -170,7 +202,7 @@ const Hero = () => {
                 whileTap={{ scale: 0.9 }}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.3 + i * 0.1, type: "spring", stiffness: 200 }}
+                transition={{ delay: 1.6 + i * 0.1, type: "spring", stiffness: 200 }}
                 title={social.label}
               >
                 <social.icon size={20} />
@@ -182,7 +214,7 @@ const Hero = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, delay: 1.5 }}
+            transition={{ duration: 1.2, delay: 1.8 }}
           >
             <Suspense fallback={null}>
               <TechSphere />
@@ -195,7 +227,7 @@ const Hero = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
+        transition={{ delay: 2.2 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2"
       >
         <motion.div
