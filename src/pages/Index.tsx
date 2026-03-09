@@ -12,10 +12,12 @@ import Languages from "@/components/Languages";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
+import GridPulseBackground from "@/components/GridPulseBackground";
 
 const Index = () => {
   return (
     <div id="top" className="min-h-screen bg-background">
+      <GridPulseBackground />
       <CustomCursor />
       <Navbar />
       <header>
