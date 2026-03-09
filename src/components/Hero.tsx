@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Github, Linkedin, FileText, ArrowDown } from "lucide-react";
+import { Github, Linkedin, ArrowDown } from "lucide-react";
 import { useRef, lazy, Suspense } from "react";
 import Typewriter from "./Typewriter";
 
