@@ -13,12 +13,16 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import GridPulseBackground from "@/components/GridPulseBackground";
+import { useIsMobileDevice } from "@/hooks/use-reduced-motion";
 
 const Index = () => {
+  const isMobile = useIsMobileDevice();
+
   return (
     <div id="top" className="min-h-screen bg-background">
-      <GridPulseBackground />
-      <CustomCursor />
+      {/* Skip heavy background effects on mobile */}
+      {!isMobile && <GridPulseBackground />}
+      {!isMobile && <CustomCursor />}
       <Navbar />
       <header>
         <Hero />

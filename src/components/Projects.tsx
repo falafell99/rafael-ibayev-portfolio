@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Github, ExternalLink, Archive } from "lucide-react";
 import { useRef } from "react";
+import { useIsMobileDevice } from "@/hooks/use-reduced-motion";
 
 const featuredProjects = [
   {
@@ -75,7 +76,8 @@ const archiveProjects = [
   },
 ];
 
-const FeaturedCard = ({ project, i }: { project: typeof featuredProjects[0]; i: number }) => {
+// Desktop card with 3D tilt
+const DesktopFeaturedCard = ({ project, i }: { project: typeof featuredProjects[0]; i: number }) => {
   const ref = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -102,87 +104,109 @@ const FeaturedCard = ({ project, i }: { project: typeof featuredProjects[0]; i: 
       className="glass-card group overflow-hidden relative transition-all duration-500 hover:border-[#10b981]/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.15),0_0_60px_rgba(16,185,129,0.1)]"
     >
       <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ boxShadow: "inset 0 0 0 1px rgba(16, 185, 129, 0.3)", background: "linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, transparent 50%, rgba(16, 185, 129, 0.02) 100%)" }}
-      />
       <div className="relative p-8">
-        <div className="flex items-start justify-between mb-6">
-          <div>
-            <motion.span className="font-mono-label text-[#10b981] mb-3 block" initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 + i * 0.1 }}>
-              {project.tag}
-            </motion.span>
-            <h3 className="text-2xl md:text-3xl font-bold text-foreground group-hover:text-[#10b981] transition-all duration-300">{project.title}</h3>
-          </div>
-          {project.github && (
-            <a href={project.github} target="_blank" rel="noopener noreferrer" className="relative z-10 p-3 rounded-full glass-card text-muted-foreground hover:text-[#10b981] hover:border-[#10b981]/40 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all duration-300" onClick={(e) => e.stopPropagation()}>
-              <motion.div whileHover={{ scale: 1.2, rotate: 5 }} whileTap={{ scale: 0.9 }}><Github size={22} /></motion.div>
-            </a>
-          )}
-        </div>
-        <p className="text-muted-foreground leading-relaxed mb-4 text-base">{project.description}</p>
-        {project.math && (
-          <div className="mb-6 p-3 rounded-lg bg-secondary/30 border border-border/50 font-mono text-sm text-[#10b981]">
-            <span className="text-muted-foreground text-xs mr-2">ƒ(x):</span>{project.math}
-          </div>
-        )}
-        <div className="flex flex-wrap gap-2">
-          {project.techStack.map((tech, ti) => (
-            <motion.span key={tech} className="px-3 py-1.5 rounded-full text-xs font-medium bg-secondary/50 text-secondary-foreground border border-border/50 hover:border-[#10b981]/40 hover:text-[#10b981] transition-all duration-300" initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.5 + ti * 0.05 }} whileHover={{ scale: 1.05 }}>
-              {tech}
-            </motion.span>
-          ))}
-        </div>
-        {project.live ? (
-          <motion.a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-[#10b981] hover:text-[#34d399] transition-colors group/link" whileHover={{ x: 5 }}>
-            <span>View Project</span>
-            <ExternalLink size={14} className="group-hover/link:translate-x-1 transition-transform" />
-          </motion.a>
-        ) : (
-          <motion.a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-[#10b981] hover:text-[#34d399] transition-colors group/link" whileHover={{ x: 5 }}>
-            <span>View on GitHub</span>
-            <ExternalLink size={14} className="group-hover/link:translate-x-1 transition-transform" />
-          </motion.a>
-        )}
+        <CardContent project={project} i={i} />
       </div>
     </motion.article>
   );
 };
 
+// Mobile card - no 3D tilt, no spring physics
+const MobileFeaturedCard = ({ project, i }: { project: typeof featuredProjects[0]; i: number }) => {
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-30px" }}
+      transition={{ duration: 0.4, delay: i * 0.08 }}
+      className="glass-card group overflow-hidden relative"
+    >
+      <div className="relative p-6">
+        <CardContent project={project} i={i} mobile />
+      </div>
+    </motion.article>
+  );
+};
+
+// Shared card content
+const CardContent = ({ project, i, mobile }: { project: typeof featuredProjects[0]; i: number; mobile?: boolean }) => (
+  <>
+    <div className="flex items-start justify-between mb-4 md:mb-6">
+      <div>
+        <span className="font-mono-label text-[#10b981] mb-2 block">{project.tag}</span>
+        <h3 className="text-xl md:text-3xl font-bold text-foreground">{project.title}</h3>
+      </div>
+      {project.github && (
+        <a href={project.github} target="_blank" rel="noopener noreferrer" className="relative z-10 p-2 md:p-3 rounded-full glass-card text-muted-foreground hover:text-[#10b981] transition-colors duration-300" onClick={(e) => e.stopPropagation()}>
+          <Github size={mobile ? 18 : 22} />
+        </a>
+      )}
+    </div>
+    <p className="text-muted-foreground leading-relaxed mb-4 text-sm md:text-base">{project.description}</p>
+    {project.math && !mobile && (
+      <div className="mb-6 p-3 rounded-lg bg-secondary/30 border border-border/50 font-mono text-sm text-[#10b981]">
+        <span className="text-muted-foreground text-xs mr-2">ƒ(x):</span>{project.math}
+      </div>
+    )}
+    <div className="flex flex-wrap gap-2 mb-4">
+      {project.techStack.map((tech) => (
+        <span key={tech} className="px-2 md:px-3 py-1 md:py-1.5 rounded-full text-xs font-medium bg-secondary/50 text-secondary-foreground border border-border/50">
+          {tech}
+        </span>
+      ))}
+    </div>
+    {project.live ? (
+      <a href={project.live} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-2 md:mt-4 text-sm font-medium text-[#10b981]">
+        <span>View Project</span>
+        <ExternalLink size={14} />
+      </a>
+    ) : (
+      <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-2 md:mt-4 text-sm font-medium text-[#10b981]">
+        <span>View on GitHub</span>
+        <ExternalLink size={14} />
+      </a>
+    )}
+  </>
+);
+
 const Projects = () => {
+  const isMobile = useIsMobileDevice();
+
   return (
     <section id="projects" className="py-24 px-6 relative">
-      <div className="absolute top-20 right-10 w-[500px] h-[500px] rounded-full blur-[150px] opacity-10 bg-[#10b981] pointer-events-none" />
-      <div className="absolute bottom-20 left-10 w-[400px] h-[400px] rounded-full blur-[120px] opacity-10 bg-accent pointer-events-none" />
+      {/* Background blurs - desktop only */}
+      {!isMobile && (
+        <>
+          <div className="absolute top-20 right-10 w-[500px] h-[500px] rounded-full blur-[150px] opacity-10 bg-[#10b981] pointer-events-none" />
+          <div className="absolute bottom-20 left-10 w-[400px] h-[400px] rounded-full blur-[120px] opacity-10 bg-accent pointer-events-none" />
+        </>
+      )}
 
       <div className="container max-w-7xl mx-auto relative">
-        {/* Featured Header */}
-        <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="mb-16">
-          <motion.span className="font-mono-label text-[#10b981] mb-4 block" initial={{ opacity: 0, letterSpacing: "0.5em" }} whileInView={{ opacity: 1, letterSpacing: "0.2em" }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+        <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="mb-16">
+          <span className="font-mono-label text-[#10b981] mb-4 block" style={{ letterSpacing: "0.2em" }}>
             FEATURED PROJECTS
-          </motion.span>
+          </span>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Engineering Excellence</h2>
-          <motion.div className="h-1 bg-gradient-to-r from-[#10b981] to-[#34d399] rounded-full mt-4" initial={{ width: 0 }} whileInView={{ width: 120 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.3 }} />
+          <div className="h-1 w-[120px] bg-gradient-to-r from-[#10b981] to-[#34d399] rounded-full mt-4" />
         </motion.div>
 
-        {/* Featured Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-24" style={{ perspective: "1200px" }}>
-          {featuredProjects.map((project, i) => (
-            <FeaturedCard key={i} project={project} i={i} />
-          ))}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-24" style={isMobile ? undefined : { perspective: "1200px" }}>
+          {featuredProjects.map((project, i) =>
+            isMobile
+              ? <MobileFeaturedCard key={i} project={project} i={i} />
+              : <DesktopFeaturedCard key={i} project={project} i={i} />
+          )}
         </div>
 
-        {/* Archives Header */}
-        <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.7 }} className="mb-10">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="mb-10">
           <div className="flex items-center gap-3 mb-4">
             <Archive size={20} className="text-[#10b981]" />
-            <motion.span className="font-mono-label text-[#10b981]" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-              MORE PROJECTS
-            </motion.span>
+            <span className="font-mono-label text-[#10b981]">MORE PROJECTS</span>
           </div>
           <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-muted-foreground">Archives</h3>
         </motion.div>
 
-        {/* Archive Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {archiveProjects.map((project, i) => (
             <motion.a
@@ -190,12 +214,11 @@ const Projects = () => {
               href={project.github !== "#" ? project.github : undefined}
               target={project.github !== "#" ? "_blank" : undefined}
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ y: -4 }}
-              className="glass-card p-6 group hover:border-[#10b981]/40 hover:shadow-[0_0_20px_rgba(16,185,129,0.1)] transition-all duration-300 block"
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+              className="glass-card p-6 group hover:border-[#10b981]/40 transition-colors duration-300 block"
             >
               <div className="flex items-start justify-between mb-2">
                 <span className="font-mono-label text-[#10b981] text-[10px]">{project.tag}</span>
