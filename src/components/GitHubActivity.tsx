@@ -1,27 +1,40 @@
 import { motion } from "framer-motion";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ExternalLink } from "lucide-react";
 
+const USERNAME = "falafell99";
 const DAYS = 7;
 const DAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
+
+const LEVEL_COLORS = [
+  "bg-[#0a0a0a] border border-[#1a1a1a]",    // 0 - empty
+  "bg-emerald-900/60",                          // 1
+  "bg-emerald-700/70",                          // 2
+  "bg-emerald-500/80",                          // 3
+  "bg-emerald-400",                              // 4
+];
+
+const LEGEND_COLORS = [
+  "bg-[#0a0a0a] border border-[#1a1a1a]",
+  "bg-emerald-900/60",
+  "bg-emerald-700/70",
+  "bg-emerald-500/80",
+  "bg-emerald-400",
+];
+
+interface DayData {
+  date: string;
+  count: number;
+  level: number;
+}
+
 const MONTH_LABELS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-// Real contribution data from github.com/falafell99
-const CONTRIBUTIONS: Record<string, number> = {
-  "2025-11-04": 1,
-  "2025-11-30": 4,
-  "2025-12-04": 1,
-  "2025-12-21": 1,
-  "2025-12-28": 1,
-  "2026-01-04": 1,
-  "2026-01-11": 1,
-  "2026-01-13": 1,
-  "2026-02-25": 2,
-  "2026-02-27": 4,
-  "2026-02-28": 23,
-  "2026-03-02": 11,
-  "2026-03-05": 9,
-  "2026-03-08": 6,
+const formatDate = (d: Date): string => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
 };
 
 const getLevel = (count: number): number => {
@@ -32,45 +45,88 @@ const getLevel = (count: number): number => {
   return 4;
 };
 
-const getLevelClass = (level: number) => {
-  switch (level) {
-    case 0: return "bg-muted/40";
-    case 1: return "bg-primary/25";
-    case 2: return "bg-primary/50";
-    case 3: return "bg-primary/75";
-    case 4: return "bg-primary";
-    default: return "bg-muted/40";
+const parseContributionsFromSVG = (html: string): Record<string, number> => {
+  const contributions: Record<string, number> = {};
+  // Match tool-tip elements or td elements with data-date and data-level
+  const regex = /data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d)"/g;
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    const date = match[1];
+    const level = parseInt(match[2]);
+    // Map GitHub levels to approximate counts
+    const countMap: Record<number, number> = { 0: 0, 1: 1, 2: 3, 3: 7, 4: 15 };
+    contributions[date] = countMap[level] ?? 0;
   }
-};
-
-const formatDate = (d: Date): string => {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${y}-${m}-${day}`;
+  return contributions;
 };
 
 const GitHubActivity = () => {
+  const [contributions, setContributions] = useState<Record<string, number>>({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const fetchContributions = async () => {
+      try {
+        const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`);
+        if (!res.ok) throw new Error("API failed");
+        const data = await res.json();
+        const map: Record<string, number> = {};
+        if (data.contributions) {
+          for (const day of data.contributions) {
+            if (day.count > 0) {
+              map[day.date] = day.count;
+            }
+          }
+        }
+        setContributions(map);
+        setLoading(false);
+      } catch {
+        // Fallback: try scraping approach
+        try {
+          const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${USERNAME}`);
+          if (res.ok) {
+            const data = await res.json();
+            const map: Record<string, number> = {};
+            if (data.contributions) {
+              for (const day of data.contributions) {
+                if (day.count > 0) {
+                  map[day.date] = day.count;
+                }
+              }
+            }
+            setContributions(map);
+          }
+        } catch {
+          setError(true);
+        }
+        setLoading(false);
+      }
+    };
+    fetchContributions();
+  }, []);
+
   const { grid, monthLabels, totalContributions } = useMemo(() => {
-    const end = new Date(2026, 2, 8); // March 8, 2026
+    const now = new Date();
+    const end = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const start = new Date(end);
-    start.setDate(start.getDate() - 364); // ~52 weeks back
+    start.setDate(start.getDate() - 364);
 
     // Align start to Sunday
     const dayOfWeek = start.getDay();
     start.setDate(start.getDate() - dayOfWeek);
 
-    const weeks: { level: number; count: number; date: string }[][] = [];
+    const weeks: DayData[][] = [];
     const months: { label: string; col: number }[] = [];
     let total = 0;
     let lastMonth = -1;
     const current = new Date(start);
 
     while (current <= end || weeks.length < 52) {
-      const week: { level: number; count: number; date: string }[] = [];
+      const week: DayData[] = [];
       for (let d = 0; d < DAYS; d++) {
         const dateStr = formatDate(current);
-        const count = CONTRIBUTIONS[dateStr] || 0;
+        const count = contributions[dateStr] || 0;
         total += count;
         week.push({ level: getLevel(count), count, date: dateStr });
 
@@ -85,7 +141,7 @@ const GitHubActivity = () => {
     }
 
     return { grid: weeks, monthLabels: months, totalContributions: total };
-  }, []);
+  }, [contributions]);
 
   return (
     <section className="py-24 px-6 relative">
@@ -106,11 +162,11 @@ const GitHubActivity = () => {
           >
             CONTRIBUTIONS
           </motion.span>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
             GitHub Activity
           </h2>
           <motion.div
-            className="h-1 bg-primary rounded-full mt-4"
+            className="h-1 bg-emerald-500 rounded-full mt-4"
             initial={{ width: 0 }}
             whileInView={{ width: 80 }}
             viewport={{ once: true }}
@@ -123,35 +179,42 @@ const GitHubActivity = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="glass-card p-6 overflow-x-auto"
+          className="rounded-2xl p-6 overflow-x-auto border border-emerald-900/30"
+          style={{ background: "#030303" }}
         >
           <div className="flex items-center justify-between mb-4">
             <p className="text-muted-foreground text-sm">
-              <span className="text-foreground font-semibold">{totalContributions}</span> contributions in the last year
+              {loading ? (
+                <span className="text-muted-foreground">Loading contributions...</span>
+              ) : (
+                <>
+                  <span className="text-white font-semibold">{totalContributions}</span>{" "}
+                  contributions in the last year
+                </>
+              )}
             </p>
             <a
-              href="https://github.com/falafell99"
+              href={`https://github.com/${USERNAME}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors font-mono"
+              className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-emerald-400 transition-colors font-mono"
             >
-              @falafell99 <ExternalLink size={12} />
+              @{USERNAME} <ExternalLink size={12} />
             </a>
           </div>
 
           {/* Month labels */}
-          <div className="flex gap-[3px] mb-1 ml-8">
+          <div className="relative ml-8 h-5 mb-1">
             {monthLabels.map((m, i) => (
               <span
                 key={i}
                 className="text-[10px] text-muted-foreground font-mono absolute"
-                style={{ left: `calc(32px + ${m.col} * 16px)` }}
+                style={{ left: `${m.col * 16}px` }}
               >
                 {m.label}
               </span>
             ))}
           </div>
-          <div className="h-4" />
 
           {/* Grid */}
           <div className="flex gap-1">
@@ -169,14 +232,14 @@ const GitHubActivity = () => {
                   {week.map((cell, di) => (
                     <motion.div
                       key={`${wi}-${di}`}
-                      className={`w-[13px] h-[13px] rounded-[2px] ${getLevelClass(cell.level)} cursor-default`}
+                      className={`w-[13px] h-[13px] rounded-sm ${LEVEL_COLORS[cell.level]} cursor-default`}
                       title={`${cell.count} contributions on ${cell.date}`}
                       initial={{ opacity: 0, scale: 0 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{
-                        duration: 0.15,
-                        delay: wi * 0.008 + di * 0.005,
+                        duration: 0.1,
+                        delay: wi * 0.005,
                       }}
                     />
                   ))}
@@ -188,10 +251,10 @@ const GitHubActivity = () => {
           {/* Legend */}
           <div className="flex items-center gap-2 mt-4 justify-end">
             <span className="text-[10px] text-muted-foreground font-mono">Less</span>
-            {[0, 1, 2, 3, 4].map((level) => (
+            {LEGEND_COLORS.map((color, i) => (
               <div
-                key={level}
-                className={`w-[13px] h-[13px] rounded-[2px] ${getLevelClass(level)}`}
+                key={i}
+                className={`w-[13px] h-[13px] rounded-sm ${color}`}
               />
             ))}
             <span className="text-[10px] text-muted-foreground font-mono">More</span>
