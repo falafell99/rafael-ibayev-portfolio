@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useCallback, useState } from "react";
 import { ExternalLink } from "lucide-react";
-import GitHubCalendar from "react-github-calendar";
+import { GitHubCalendar } from "react-github-calendar";
 import type { Activity } from "react-github-calendar";
 
 const USERNAME = "falafell99";
