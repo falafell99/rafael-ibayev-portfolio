@@ -91,9 +91,7 @@ const GitHubActivity = () => {
               blockMargin={4}
               blockRadius={2}
               fontSize={11}
-              hideColorLegend
-              hideMonthLabels={false}
-              hideTotalCount
+              renderColorLegend={() => null}
               transformData={handleTransformData}
               style={{ width: "100%" }}
             />
